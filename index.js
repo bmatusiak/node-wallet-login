@@ -20,7 +20,7 @@ module.exports = {
     middleware:function(app,addressTypes) {
         app.use(function(req, res, next) {
             if(!req.session.key)
-                req.session.key = 123;//getRandomInt (9999999999999999999,99999999999999999999);
+                req.session.key = getRandomInt (9999999999999999999,99999999999999999999);
             next();
         });
         app.post("/login",function(req, res, next) {
