@@ -11,7 +11,6 @@ function verifyMsg(coinName,coinVersion,address,message,sig,callback){
         }
     });
 }
-var crypto = require('crypto');
 
 function random_string(size){
     var str = "";
@@ -28,7 +27,7 @@ module.exports = {
     middleware:function(app,addressTypes) {
         app.use(function(req, res, next) {
             if(!req.session.key)
-                req.session.key = random_string(256);
+                req.session.key = random_string(64);
             next();
         });
         app.post("/login",function(req, res, next) {
@@ -39,22 +38,25 @@ module.exports = {
             ){  
                 if(addressTypes[req.body.coinName])
                     verifyMsg(req.body.coinName,addressTypes[req.body.coinName],req.body.address,req.session.key,req.body.sig,function(verified){
-                        if(verified)
+                        if(verified){
                             req.session.user = {
                                 address: req.body.address,
                                 coinName: req.body.coinName,
                                 sig: req.body.sig
                             };
-                        res.redirect("/login");
+                            res.redirect("/login?code=0");
+                        }else{
+                            res.redirect("/login?code=1");
+                        }
                     });
                 else
-                    res.redirect("/login");
+                    res.redirect("/login?code=2");
             }else 
-                res.redirect("/login");
+                res.redirect("/login?code=3");
         });
         app.use(function(req, res, next) {
             if(req.session.user)
-                req.user = req.session.user.address;
+                req.user = req.session.user;
             next();
         });
     }
