@@ -15,10 +15,12 @@ var addressTypes = {
     "Dogecoin":0x1e,
     "Litecoin":0x30
 };
-
-require("../index.js").middleware(app,addressTypes);
+ 
+require("wallet-login").middleware(app,addressTypes);
 
 app.get('/login', function(req, res) {
+    if(req.session.user)
+        return res.redirect("/");
     res.send(ejs.render(fs.readFileSync(__dirname + "/login.html").toString(), 
         {
             req:req,
@@ -28,12 +30,12 @@ app.get('/login', function(req, res) {
 });
 
 app.use('/logout', function(req, res) {
-    delete req.session;
+    req.session.destroy();
     res.redirect("/");
 });
 
 app.get('/', function(req, res) {
-    res.send('Home - ' + (!req.session.user ? "<a href='/login'>Login</a>" : "<a href='/logout'>Logout</a>"));
+    res.send('Home - ' + (!req.session.user ? "<a href='/login'>Login</a>" : "<a href='/logout'>Logout</a> - Address: "+req.session.user.address));
 });
 
 app.listen(process.env.PORT || 8080);
