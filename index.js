@@ -11,16 +11,18 @@ function verifyMsg(coinName,coinVersion,address,message,sig,callback){
         }
     });
 }
+var crypto = require('crypto');
 
 function getRandomInt (min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    var rndInt = Math.floor(Math.random() * (max - min + 1)) + min;
+    return crypto.createHash('sha256').update(rndInt).digest('base64');
 }
 
 module.exports = {
     middleware:function(app,addressTypes) {
         app.use(function(req, res, next) {
             if(!req.session.key)
-                req.session.key = getRandomInt (9999999999999999999,99999999999999999999);
+                req.session.key = getRandomInt (9999999999999999999,99999999999999999999)+""+(new Date().getTime());
             next();
         });
         app.post("/login",function(req, res, next) {
@@ -35,7 +37,6 @@ module.exports = {
                             req.session.user = {
                                 address: req.body.address,
                                 coinName: req.body.coinName,
-                                key: req.body.key,
                                 sig: req.body.sig
                             };
                         res.redirect("/login");
