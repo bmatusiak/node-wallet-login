@@ -1,6 +1,6 @@
 {
-  "name": "walletlogin",
-  "version": "0.0.0",
+  "name": "wallet-login",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "dependencies": {
