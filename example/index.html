@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>Wallet Login Example</title>
+    </head>
+    
+    <body>
+        <h1>Wallet Login Example - Home</h1>
+        <%- (!req.session.user ? "<a href='/login'>Login</a>" : "<a href='/logout'>Logout</a> - Address: "+req.session.user.address) %>
+    </body>
+
+</html>

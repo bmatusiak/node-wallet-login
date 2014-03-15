@@ -11,9 +11,10 @@ app.use(express.bodyParser());
 
 
 var addressTypes = {
-    "Bitcoin":0x00,
-    "Dogecoin":0x1e,
-    "Litecoin":0x30
+    "Bitcoin":0,
+    "Dogecoin":30,
+    "Litecoin":48,
+    "Rubycoin":61
 };
  
 require("wallet-login").middleware(app,addressTypes);
@@ -35,7 +36,14 @@ app.use('/logout', function(req, res) {
 });
 
 app.get('/', function(req, res) {
-    res.send('Home - ' + (!req.session.user ? "<a href='/login'>Login</a>" : "<a href='/logout'>Logout</a> - Address: "+req.session.user.address));
+    res.send(ejs.render(fs.readFileSync(__dirname + "/index.html").toString(), 
+        {
+            req:req,
+            addressTypes:addressTypes
+        }
+    ));
 });
 
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 8080,function(){
+    console.log("started");
+});

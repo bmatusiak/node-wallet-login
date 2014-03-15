@@ -2,18 +2,19 @@
 <html>
     
     <head>
-        <title>Template</title>
+        <title>Wallet Login Example</title>
     </head>
     
     <body>
-        <h1>Wallet Login Example</h1>
-        <form method="POST" action="/login">SignThis:
-            <input value="<%- req.session.key %>">
-            </br>
+        <h1>Wallet Login Example - Login</h1>
+        <div><%- JSON.stringify(req.session.user) %></div>
+        SignThis:
+        <textarea rows="4" cols="50"><%- req.session.key %></textarea>
+        <form method="POST" action="/login">
             <hr>Address:
             <input name="address" value="">
             </br>
-            
+            CoinType:
             <select name="coinName">
                 <% for(var i in addressTypes){ %>
                     <option value="<%- i %>">

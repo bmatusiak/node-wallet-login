@@ -6,6 +6,6 @@
   "dependencies": {
     "express":"3.1.*",
     "ejs":"*",
-    "wallet-login":"https://github.com/bmatusiak/node-wallet-login/archive/6310ffe6670640a87a755f5d4b5d2682b35b39cb.tar.gz"
+    "wallet-login":"https://github.com/bmatusiak/node-wallet-login/archive/7dbdce9f0173e0e70653f37eb9cab1d8f52fbcc4.tar.gz"
   }
 }
