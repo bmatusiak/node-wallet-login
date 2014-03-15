@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>Template</title>
+    </head>
+    
+    <body>
+        <h1>Wallet Login Example</h1>
+        <form method="POST" action="/login">SignThis:
+            <input value="<%- req.session.key %>">
+            </br>
+            <hr>Address:
+            <input name="address" value="">
+            </br>
+            
+            <select name="coinName">
+                <% for(var i in addressTypes){ %>
+                    <option value="<%- i %>">
+                        <%- i %>
+                    </option>
+                <% } %>
+            </select><br>
+            
+            Signature:
+            <input name="sig" value=""><br>
+            <input type="submit">
+            </br>
+        </form>
+    </body>
+
+</html>
