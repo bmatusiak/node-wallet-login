@@ -36,7 +36,8 @@ module.exports = {
                 req.body.address && 
                 req.body.sig
             ){  
-                if(addressTypes[req.body.coinName])
+                var coinKey = addressTypes[req.body.coinName];
+                if(coinKey >= 0)
                     verifyMsg(req.body.coinName,addressTypes[req.body.coinName],req.body.address,req.session.key,req.body.sig,function(verified){
                         if(verified){
                             req.session.user = {
